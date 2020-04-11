@@ -1,0 +1,122 @@
+schema===== 
+sección donde se definen los tipos de operaciones de nuestra API.
+Las Queries serán las consultas que se podrán realizar y las Mutations la 
+forma en la que realizamos modificaciones
+en el servidor.
+
+Query====== 
+se definen dos consultas: pizzas e ingredients:
+La consulta pizzas puede recibir como parámetros un 
+array de string (name: [String]) y devolverá
+un array con objetos de tipo Pizza ([Pizza]).
+La consulta ingredients no recibe parámetros y
+ devolverá un array con objetos de tipo Ingredient ([Ingredient]).
+
+
+Mutation===== 
+se define la modificación createPizzas que 
+creará pizzas y que puede recibir un array de objetos de
+ tipo PizzaInput (pizzas: [PizzaInput]) y que devolverá un array
+de objetos de tipo Pizza ([Pizza]) con las pizzas creadas.
+
+
+
+============================QUERY=======================
+query{
+  getClientes{
+    id
+    nombre
+  }
+}
+=======================ALIAS==
+usando alias al ejecutar mas de una vez la consulta
+query{
+  uno:getClientes(limite:5){
+    id
+    nombre
+  }
+
+  dos:getClientes(limite:5){
+    id
+    nombre
+  }
+}
+
+=================FRAGMET=======================
+query{
+ uno: getCliente(id: "5e6eb849758dae22284cdf4d"){
+    id
+    nombre
+    emails{
+      email
+    }
+  }
+  
+  getCliente(id: "5e6eb83e758dae22284cdf4c"){
+    ...clientes
+    emails{
+      email
+    }
+  }
+}
+
+fragment clientes on Cliente {
+  nombre
+  apellido
+  edad
+  pedidos{
+    producto
+  }
+}
+
+
+
+==========================0MUTATION=======================
+
+mutation{
+  crearCliente(input:{
+    nombre: "Carloss" 
+    apellido:"unocc"
+    empresa:"InkGrid"
+    emails:[
+      {email:"carlos00_@gmail.com"},
+        	{email:"yanitra_@gmail.com"},
+    ]
+    edad:22
+    tipo:PREMIUM
+    pedidos:[
+      {producto:"Curso JS0"
+      precio: 180}
+    ]
+  }) {
+    id
+  }
+}
+
+
+mutation{
+  actualizarCliente(input:{
+    id:"5e6d4aca032d9826005a0aee"
+    nombre:"Robertp Carlos"
+    apellido: "Unocc Sihuinta"
+    empresa: "UNMSM"
+    edad:18
+    tipo: PREMIUM
+  }){
+    id
+    nombre
+    apellido
+    empresa
+    edad
+  }
+}
+
+
+
+
+
+mutation{
+  eliminarCliente(id: "5e6d4aca032d9826005a0aee")
+}
+
+

@@ -1,0 +1,14 @@
+
+==========hasH password
+npm install -g node-gyp
+npm install -save bcrypt
+
+plus 
+npm audit fix
+
+===token
+npm i dotenv jsonwebtoken	
+
+plus npm audit fix
+
+dotenv=>archivo de configuracion como un String Secreto
